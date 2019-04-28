@@ -13,3 +13,18 @@ Use the package manager [nuget](https://www.nuget.org) to install Microsoft.AspN
 ```bash
 Install Microsoft.AspNetCore.Diagnostics
 ```
+
+```c#
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    if (env.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+    app.Run(async (context) =>
+    {
+        throw new Exception("Error Occurred while processing your request");
+        await context.Response.WriteAsync("Request handled and response generated");
+    });
+}
+```
