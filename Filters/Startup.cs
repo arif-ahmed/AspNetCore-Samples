@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Filters.Filters.ActionFilters;
 using Filters.Filters.ResourceFilters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,7 @@ namespace Filters
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options => {
+                options.Filters.Add(new WhitespaceFilterAttribute());
                 options.Filters.Add(typeof(IEFilterAttribute));
             });
         }
