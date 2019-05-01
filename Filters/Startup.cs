@@ -17,7 +17,10 @@ namespace Filters
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<LoggingActionFilter>();
+
             services.AddMvc(options => {
+                options.Filters.Add<LoggingActionFilter>();
                 options.Filters.Add(new WhitespaceFilterAttribute());
                 options.Filters.Add(typeof(IEFilterAttribute));
             });

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Filters.Controllers
 {
 
+    [ServiceFilter(typeof(LoggingActionFilter))]
     public class HomeController : Controller
     {
         [HttpGet]
