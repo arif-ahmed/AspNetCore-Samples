@@ -27,8 +27,21 @@ ASP.NET Core has the following filter types.Each is executed on a different stag
 Together, all these types of filters form a filter pipeline (filter pipeline), which is embedded in the request processing process in MVC and which starts running after the MVC infrastructure has selected a controller method to process the request. At different stages of processing a request in this pipeline, the corresponding filter is called:
 
 ![alt text](https://andrewlock.net/content/images/2018/02/filters.png)
+
 ![alt text](https://dotnettricks.blob.core.windows.net/img/aspnetcore/aspnet-core-filters.jpg)
-![alt text](https://andrewlock.net/content/images/2018/02/filters.png)
+
+![alt text](https://media.ttmind.com/Media/tech/article_98_9-25-20182-00-52PM.png)
+
+### Filter definition
+Despite the fact that the filter conveyor is formed by five different types of filters, which are called at different stages and have their own strictly task, however, they all have common implementation points. So, all filters support two ways of implementation: synchronous and asynchronous. Depending on the method chosen, the filter class will implement one or another interface.
+
+| Filter type | Synchronous interface | Asynchronous interface
+| ------ | ------ | ------ |
+| Authorization Filter | IAuthorizationFilter | IAsyncAuthorizationFilter |
+| Resource Filter | IResourceFilter | IAsyncResourceFilter |
+| Action Filter | IActionFilter | IAsyncActionFilter |
+| Exception Filter | IExceptionFilter | IAsyncExceptionFilter |
+| Result Filter | IResultFilter | IAsyncResultFilter |
 
 ## Installation
 
