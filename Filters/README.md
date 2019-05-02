@@ -113,10 +113,9 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddMvc(options =>
     {
-        options.Filters.Add(typeof(SimpleActionFilter)); // подключение по типу
-         
-        // альтернативный вариант подключения
-        //options.Filters.Add(new SimpleActionFilter()); // подключение по объекту
+        options.Filters.Add(typeof(SimpleActionFilter));
+        // or
+        options.Filters.Add(new SimpleActionFilter()); 
     });
 }
 ```
