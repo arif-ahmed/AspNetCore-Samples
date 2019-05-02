@@ -1,10 +1,11 @@
-Error Handling
-==============
- - Developer Exception Page
- - Exception Handler
- - Status Code Pages
- - Exception Filters
- - Model Validation (ModelState)
+Filters
+=======
+Filters are code injected into request processing. There can be many categories of filters: authorization, caching, logging, exception, and more. The filters are executed after ActionInvocation, and after the middleware is executed on the ASP.NET Core pipeline.
+
+Filters allow you to perform certain actions before or after a certain stage of processing a request.
+
+Filters allow you to run code before or after specific stages in the
+Request Processing Pipeline
 
 ## Installation
 
