@@ -22,6 +22,13 @@ ASP.NET Core has the following filter types.Each is executed on a different stag
 | Exception Filter | Used to apply global policies for unhandled errors that occur |
 | Result Filter | The filter is applied to the results of actions; it is executed both before and after receiving the result |
 
+### Plugins
+
+Together, all these types of filters form a filter pipeline (filter pipeline), which is embedded in the request processing process in MVC and which starts running after the MVC infrastructure has selected a controller method to process the request. At different stages of processing a request in this pipeline, the corresponding filter is called:
+
+![alt text](https://andrewlock.net/content/images/2018/02/filters.png)
+![alt text](https://dotnettricks.blob.core.windows.net/img/aspnetcore/aspnet-core-filters.jpg)
+![alt text](https://andrewlock.net/content/images/2018/02/filters.png)
 
 ## Installation
 
