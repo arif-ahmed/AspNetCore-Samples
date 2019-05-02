@@ -22,7 +22,7 @@ ASP.NET Core has the following filter types.Each is executed on a different stag
 | Exception Filter | Used to apply global policies for unhandled errors that occur |
 | Result Filter | The filter is applied to the results of actions; it is executed both before and after receiving the result |
 
-### Plugins
+### Filter Pipeline
 
 Together, all these types of filters form a filter pipeline (filter pipeline), which is embedded in the request processing process in MVC and which starts running after the MVC infrastructure has selected a controller method to process the request. At different stages of processing a request in this pipeline, the corresponding filter is called:
 
@@ -43,25 +43,24 @@ Despite the fact that the filter conveyor is formed by five different types of f
 | Exception Filter | IExceptionFilter | IAsyncExceptionFilter |
 | Result Filter | IResultFilter | IAsyncResultFilter |
 
-## Installation
+All filters have the same scheme. The synchronous interface that filters implement is called I[Stage]Filter, where [Stage]is the request processing stage at which the filter is called. For example, for an authorization filter, the stage is conditionally called Authorization, for resource filters — Resoure, for action filters — Action, for result filters — Result, for exception filters — Exception.
 
-Use the package manager [nuget](https://www.nuget.org) to install Microsoft.AspNetCore.Diagnostics.
+Synchronous filters define two methods: On[Stage]Executingand On[Stage]Executed. The method On[Stage]Executingis called immediately before the Stage stage, and the method On[Stage]Executed immediately after the completion of the stage [Stage].
 
-```bash
-Install Microsoft.AspNetCore.Diagnostics
-```
-
+## Synchronous filter example:
 ```c#
-public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+using Microsoft.AspNetCore.Mvc.Filters;
+
+public class SimpleActionFilter : IActionFilter
 {
-    if (env.IsDevelopment())
+    public void OnActionExecuting(ActionExecutingContext context)
     {
-        app.UseDeveloperExceptionPage();
+        // code goes here
     }
-    app.Run(async (context) =>
-    {
-        throw new Exception("Error Occurred while processing your request");
-        await context.Response.WriteAsync("Request handled and response generated");
-    });
+ 
+     public void OnActionExecuted(ActionExecutedContext context)
+     {
+        // code goes here
+     }
 }
 ```
