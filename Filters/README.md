@@ -47,11 +47,14 @@ All filters have the same scheme. The synchronous interface that filters impleme
 
 Synchronous filters define two methods: On[Stage]Executingand On[Stage]Executed. The method On[Stage]Executingis called immediately before the Stage stage, and the method On[Stage]Executed immediately after the completion of the stage [Stage].
 
-## Synchronous filter example:
+When implementing interfaces, it should be borne in mind that we can implement either only the synchronous or only the asynchronous version. If the class implements both options, then the system will call only the asynchronous interface method, and the implementation of the synchronous interface will be ignored.
+
+## Synchronous Filter Example:
 ```c#
+using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-public class SimpleActionFilter : IActionFilter
+public class SimpleActionFilterAttribute : Attribute, IActionFilter
 {
     public void OnActionExecuting(ActionExecutingContext context)
     {
@@ -62,5 +65,58 @@ public class SimpleActionFilter : IActionFilter
      {
         // code goes here
      }
+}
+```
+
+## Asynchronous Filter Example:
+```c#
+using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Filters;
+
+public class SimpleAsynActionFilterAttribute : Attribute, IAsyncActionFilter
+{
+    public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    {
+        // code before
+        await next();
+        // code after
+    }
+}
+```
+
+## Applying Filters
+
+- Controller method The attribute applies to the controller method
+```c#
+public class HomeController : Controller
+{
+    [SimpleActionFilter]
+    public IActionResult Index()
+    {
+        return View();
+    }
+}
+```
+- The whole controller. The attribute applies to the controller class
+```c#
+[SimpleActionFilter]
+public class HomeController : Controller
+{
+    // содержимое контроллера
+}
+```
+- The global scope where the filter is applied to all methods of all controllers.
+  To define a filter as global, we need to change the ConfigureServices()MVC service connection in the Startup class method
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc(options =>
+    {
+        options.Filters.Add(typeof(SimpleActionFilter)); // подключение по типу
+         
+        // альтернативный вариант подключения
+        //options.Filters.Add(new SimpleActionFilter()); // подключение по объекту
+    });
 }
 ```
