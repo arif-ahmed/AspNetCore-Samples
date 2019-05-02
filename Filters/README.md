@@ -49,7 +49,7 @@ Synchronous filters define two methods: On[Stage]Executingand On[Stage]Executed.
 
 When implementing interfaces, it should be borne in mind that we can implement either only the synchronous or only the asynchronous version. If the class implements both options, then the system will call only the asynchronous interface method, and the implementation of the synchronous interface will be ignored.
 
-## Synchronous Filter Example:
+## Synchronous Filter Code Example
 ```c#
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -68,7 +68,7 @@ public class SimpleActionFilterAttribute : Attribute, IActionFilter
 }
 ```
 
-## Asynchronous Filter Example:
+## Asynchronous Filter Code Example
 ```c#
 using System;
 using System.Threading.Tasks;
